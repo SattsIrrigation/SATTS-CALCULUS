@@ -1,10 +1,19 @@
-def calcular_ini(umidade, chuva):
-    return 100 - ((0.7 * umidade) + (0.3 * chuva))
+import math
 
-def classificar_ini(ini):
-    if ini <= 30:
-        return "BOA"
-    elif ini <= 60:
+def calcular_umidade_exponencial(umidade_inicial, taxa_evaporacao, tempo):
+    """
+    Calcula a umidade do solo ao longo do tempo usando decaimento exponencial.
+    U(t) = U0 * e^(-k*t)
+    """
+    return umidade_inicial * math.exp(-taxa_evaporacao * tempo)
+
+def classificar_status(umidade_atual, limite_critico=30):
+    """
+    Classifica se precisa irrigar baseado no limite crítico.
+    """
+    if umidade_atual <= limite_critico:
+        return "IRRIGAR"
+    elif umidade_atual <= limite_critico + 20:
         return "ATENCAO"
     else:
-        return "IRRIGAR"
+        return "BOA"
